@@ -89,17 +89,13 @@ exports.init = function init(logger, config, cli, appc) {
 		callback();
 	});
 
-	cli.on('build.pre.compile', function(data, callback){
+	cli.on('build.ios.xcodebuild', {pre: function(data, callback){
 		logger.info('Coping Fabric.framework: ' + chalk.cyan(destination.fabric));
 		fs.ensureSymlinkSync(source.fabric, destination.fabric);
 
 		logger.info('Coping Crashlytics.framework: ' + chalk.cyan(destination.crashlytics));
 		fs.ensureSymlinkSync(source.crashlytics, destination.crashlytics);
 
-		callback();
-	});
-
-	cli.on('build.ios.prerouting', function(data, callback){
 		var code = '';
 
 		logger.info('Fabric code injecting: ' + chalk.cyan(tiappm));
@@ -128,9 +124,9 @@ exports.init = function init(logger, config, cli, appc) {
 			});
 			fs.writeFileSync(pbxproj, project.writeSync());
 
-			callback();
+			callback(null, data);
 		});
-	});
+	}});
 
 	cli.on('build.finalize', function(data, callback){
 		var option = [];
