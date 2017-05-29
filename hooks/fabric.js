@@ -91,10 +91,10 @@ exports.init = function init(logger, config, cli, appc) {
 
 	cli.on('build.pre.compile', function(data, callback){
 		logger.info('Coping Fabric.framework: ' + chalk.cyan(destination.fabric));
-		fs.copySync(source.fabric, destination.fabric);
+		fs.ensureSymlinkSync(source.fabric, destination.fabric);
 
 		logger.info('Coping Crashlytics.framework: ' + chalk.cyan(destination.crashlytics));
-		fs.copySync(source.crashlytics, destination.crashlytics);
+		fs.ensureSymlinkSync(source.crashlytics, destination.crashlytics);
 
 		callback();
 	});
