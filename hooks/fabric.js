@@ -1,8 +1,7 @@
 var _ = require('lodash'),
 	chalk = require('chalk'),
-	fs = require('fs'),
+	fs = require('fs-extra'),
 	path = require('path'),
-	wrench = require('wrench'),
 	xcode = require('xcode'),
 	pkg = require(path.join(__dirname, '..', 'package.json'));
 
@@ -15,7 +14,7 @@ exports.init = function init(logger, config, cli, appc) {
 	}
 
 	if (_.has(cli.argv, 'fabric-help')) {
-		logger.info('\n\n' + chalk.cyan.bold(pkg.name) + ', Plugin version ' + pkg.version + ', ' + pkg.description + '\n' + 
+		logger.info('\n\n' + chalk.cyan.bold(pkg.name) + ', Plugin version ' + pkg.version + ', ' + pkg.description + '\n' +
 			chalk.gray('Copyright (c) ' + pkg.author) + '\n\n' +
 			'Usage: ' + chalk.cyan('titanium build --fabric [options]') + '\n' +
 			'Options:\n' +
@@ -92,10 +91,10 @@ exports.init = function init(logger, config, cli, appc) {
 
 	cli.on('build.pre.compile', function(data, callback){
 		logger.info('Coping Fabric.framework: ' + chalk.cyan(destination.fabric));
-		wrench.copyDirSyncRecursive(source.fabric, destination.fabric);
+		fs.copySync(source.fabric, destination.fabric);
 
 		logger.info('Coping Crashlytics.framework: ' + chalk.cyan(destination.crashlytics));
-		wrench.copyDirSyncRecursive(source.crashlytics, destination.crashlytics);
+		fs.copySync(source.crashlytics, destination.crashlytics);
 
 		callback();
 	});
