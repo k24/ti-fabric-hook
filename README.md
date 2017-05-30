@@ -2,12 +2,13 @@
 
 Fabric Crashlytics in Titanium build hook.
 
-## Cuation
+## Caution
 
 * **This hook plugin is working in progress**
-* Working on Titanium SDK 4.1.0.GA
+* Working on Titanium SDK 6.0.4.GA
  * <= v0.0.4 Titanium SDK 4.0.0.GA
  * v0.0.5 Titanium SDK 4.1.0.GA
+ * v0.0.6 Titanium SDK 6.0.4.GA
 * Code injection to build/iphone/Classes/TiApp.m
 * Code injection to build/iphone/project.xcconfig
 * Code injection to build/iphone/[YOUR APP NAME].xcodeproj/project.pbxproj
@@ -50,6 +51,22 @@ e.g.
 </dict>
 ```
 
+13. Copy Crashlytics.framework and Fabric.framework to your project root.
+
+e.g.
+```
+project/
+  Crashlytics.framework/
+  ...
+  Fabric.framework/
+  ...
+  plugins/
+    ti.alloy/
+    ti.fabric/
+  ...
+  tiapp.xml
+```
+
 ## Installation
 
 1. ```$ git clone git@github.com:k0sukey/ti-fabric-hook.git```
@@ -61,7 +78,7 @@ e.g.
 
 ```xml
 <plugins>
-	<plugin version="0.0.5">ti.fabric</plugin>
+	<plugin version="0.0.6">ti.fabric</plugin>
 </plugins>
 ```
 
@@ -76,11 +93,11 @@ $ ti build -p ios -T device --build-only --fabric
 ### Auto deploy
 
 ```sh
-$ ti build -p ios -T device --build-only --fabric --crashlytics-emails foo@example.com
+$ ti build -p ios -T device --build-only --fabric --crashlytics-emails foo@example.com --crashlytics-submit YES
 ```
 
 ```sh
-$ ti build -p ios -T device --build-only --fabric --crashlytics-groupAliases MyTesters
+$ ti build -p ios -T device --build-only --fabric --crashlytics-groupAliases MyTesters --crashlytics-submit YES
 ```
 
 ### Show all options at the help
