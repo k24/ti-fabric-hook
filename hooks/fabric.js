@@ -102,7 +102,7 @@ exports.init = function init(logger, config, cli, appc) {
 		code = fs.readFileSync(tiappm, 'utf8');
 		code = code.replace(/(#import\s"TiApp\.h")/, '$1\n#import <Fabric/Fabric.h>\n#import <Crashlytics/Crashlytics.h>');
 		code = code.replace(/(-\s\(BOOL\)application:\(UIApplication\s\*\)application\sdidFinishLaunchingWithOptions:\(NSDictionary\s\*\)launchOptions_\n\{\n)/m,
-			'$1    [Fabric with:@[CrashlyticsKit]];\n\n');
+			'$1    [Fabric with:@[[Crashlytics class]]];\n\n');
 		fs.writeFileSync(tiappm, code);
 
 		logger.info('Fabric code injecting: ' + chalk.cyan(xcconfig));
